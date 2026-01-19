@@ -101,7 +101,6 @@ With metadata protection and optional encryption.
 
 ## 🧱 Repository Structure
 realnews-free-publish-core/
-│
 ├── README.md
 ├── LICENSE
 │
