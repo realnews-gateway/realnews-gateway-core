@@ -1,59 +1,76 @@
 # Threat Model
 
-RealNews Gateway is designed for users in high-risk, heavily censored environments.  
-This document outlines the primary adversaries, risks, and mitigation strategies considered during system design.
+This document outlines the threat model for RealNews Free Publish Core. The system is designed for environments with strong, adaptive, state‑level censorship and surveillance.
+
+## Protocol Strategy
+
+The system consistently maintains six core protocols (Hysteria2, Reality, VLESS, Trojan, XTLS, XHTTP). Future protocols may be added, but these six remain the foundation.
+
+## Accounts and Anonymity
+
+- Accounts are required for system access.  
+- Anonymity is also required: account identity is strictly separated from publishing identity.  
+- This ensures controlled access while preserving anonymous publishing.
 
 ## Adversaries
 
-### **1. State-Level Censors**
-Capabilities include:
+### 1. State‑Level Censors
+Capabilities:
 - Deep Packet Inspection (DPI)
 - Active probing
 - Traffic fingerprinting
 - IP/domain blocking
 - TLS fingerprinting
-- QUIC/HTTP/3 interference
+- Platform takedowns
 
-### **2. Surveillance Actors**
-Capabilities include:
+Mitigations:
+- Six protocols maintained and updated
+- TLS 1.3 camouflage
+- Low‑fingerprint transport
+- Multi‑node routing and fallback
+
+### 2. Surveillance Agencies
+Capabilities:
 - Metadata collection
+- Device monitoring
 - Traffic correlation
-- Endpoint monitoring
 - Social graph analysis
 
-### **3. Malicious Intermediaries**
-Capabilities include:
-- Man-in-the-middle attacks
-- Content manipulation
-- Traffic throttling or injection
+Mitigations:
+- Metadata stripping
+- Anonymous submission channels (account/identity separation)
+- Automatic encryption
+- Decentralized storage (IPFS/Arweave)
 
-## Key Risks
+### 3. Platform Moderation Systems
+Capabilities:
+- Automated content removal
+- Hash‑based media filtering
+- Keyword detection
 
-- Protocol fingerprinting and blocking  
-- Metadata leakage  
-- Node enumeration and takedown  
-- Content tampering or censorship  
-- User deanonymization  
-- Airport-style provider disappearance  
+Mitigations:
+- Multi‑mirror distribution
+- Decentralized persistence
+- Content deduplication and re‑encoding
 
-## Mitigation Strategies
+## User Risks
 
-### **Protocol-Level**
-- Use of modern, low-fingerprint protocols: Hysteria2, Reality, VLESS, Trojan, XTLS, XHTTP  
-- Automatic fallback and multi-path routing  
-- TLS 1.3 camouflage and QUIC obfuscation  
-- Traffic randomization and padding  
+- Device seizure  
+- Account compromise  
+- Network monitoring  
+- Social graph exposure  
 
-### **Application-Level**
-- Anonymous posting in BBS  
-- Minimal metadata retention  
-- Optional decentralized storage for persistence  
-- Secure uploader with encryption and metadata stripping  
+Mitigations:
+- Account/identity separation  
+- Automatic encryption  
+- Minimal client footprint  
+- No persistent identifiers  
 
-### **Operational-Level**
-- Support for NGO/community-hosted nodes  
-- No reliance on single commercial providers  
-- Open-source transparency and auditability  
-- Modular architecture to isolate failures  
+## Out‑of‑Scope Threats
 
-RealNews Gateway is not designed to protect against device-level compromise or targeted surveillance of individuals, but it significantly reduces risks associated with network-level censorship and mass surveillance.
+- Compromised user devices  
+- Hardware implants  
+- Zero‑day OS exploits  
+- Physical coercion  
+
+These threats exceed the scope of software‑level protections.
