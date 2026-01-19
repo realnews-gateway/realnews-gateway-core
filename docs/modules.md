@@ -1,69 +1,41 @@
-# Module Overview
+# Modules Overview
 
-RealNews Gateway consists of four major modules.  
-Each module is independently designed, modular, and replaceable, enabling flexible deployment across different environments.
+This document describes the major modules that make up RealNews Free Publish Core.
 
----
+## 1. Emergency Publishing Channel
+A secure, censorship‑resistant pipeline for publishing sensitive content. Features:
+- Anonymous submission
+- Metadata stripping
+- Multi‑node mirroring
+- Decentralized storage
+- NGO/media distribution
 
-## 1. VPN Access Layer
+## 2. VPN Access Layer
+A unified access layer integrating:
+- Hysteria2
+- Reality
+- VLESS
+- Trojan
+- XTLS
+- XHTTP
 
-A unified, beginner-friendly access layer integrating modern censorship-resistant protocols:
+Provides a beginner‑friendly interface for non‑technical users.
 
-- **Hysteria2** – QUIC-based, high-performance, resistant to active probing  
-- **Reality** – TLS 1.3 camouflage with minimal fingerprint  
-- **VLESS** – Flexible, modern, widely supported  
-- **Trojan** – Pure TLS camouflage  
-- **XTLS** – Low-fingerprint, high-performance data transport  
-- **XHTTP** – HTTP/3-based, indistinguishable from normal web traffic  
+## 3. News Aggregation Module
+A resilient aggregator for independent journalism:
+- RSS ingestion
+- Mirror sources
+- Deduplication
+- Offline support
 
-Features:
-- Automatic protocol selection  
-- Multi-path routing and fallback  
-- Traffic obfuscation  
-- Intelligent strategy engine  
-- Designed for non-technical users  
+## 4. Anonymous BBS
+A minimal discussion board:
+- Anonymous posting
+- Lightweight storage
+- Optional decentralized persistence
 
----
-
-## 2. News Aggregation Module
-
-A resilient system for delivering independent news in censored environments.
-
-Capabilities:
-- RSS aggregation  
-- Mirror source integration  
-- Content deduplication  
-- Offline/low-bandwidth support  
-- Optional decentralized distribution  
-
----
-
-## 3. Lightweight Anonymous BBS
-
-A minimal, privacy-preserving discussion board.
-
-Features:
-- Anonymous posting  
-- Basic moderation tools  
-- Lightweight storage  
-- Optional IPFS/Arweave persistence  
-- Designed for low-risk community interaction  
-
----
-
-## 4. Secure Uploader
-
-A safe channel for transmitting text, images, and media to:
-
-- External platforms  
-- Journalists or NGOs  
-- Decentralized storage networks (IPFS, Arweave)
-
-Security features:
-- Metadata stripping  
-- Optional encryption  
-- Tamper-resistant upload pipeline  
-
----
-
-Each module is designed to operate independently but integrates seamlessly into the RealNews Gateway ecosystem.
+## 5. Secure Uploader
+A safe channel for transmitting text, images, and media:
+- Metadata protection
+- Optional encryption
+- Multi‑destination delivery
