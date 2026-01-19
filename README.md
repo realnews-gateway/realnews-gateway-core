@@ -100,3 +100,34 @@ With metadata protection and optional encryption.
 ---
 
 ## 🧱 Repository Structure
+realnews-free-publish-core/
+│
+├── README.md
+├── LICENSE
+│
+├── docs/
+│   ├── overview.md
+│   ├── threat-model.md
+│   ├── funding-notes.md
+│   ├── modules.md
+│   └── emergency-publishing.md
+│
+├── architecture/
+│   ├── system-overview.md
+│   ├── protocol-integration.md
+│   ├── data-flow.md
+│   ├── security-design.md
+│   └── deployment-models.md
+│
+├── modules/
+│   ├── vpn-access-layer/
+│   ├── news-aggregation/
+│   ├── anonymous-bbs/
+│   └── emergency-publishing/
+│
+├── roadmap/
+│   ├── milestones.md
+│   ├── deliverables.md
+│   └── timeline.md
+│
+└── .github/
