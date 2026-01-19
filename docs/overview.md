@@ -1,27 +1,26 @@
-# Project Overview
+# Overview
 
-RealNews Gateway is an open-source information freedom infrastructure designed to help users in highly censored regions securely access independent news, global information, and public-interest content.  
-The project integrates a modern censorship-resistant access layer, a resilient news aggregation system, a lightweight anonymous discussion board, and a secure uploader for external platforms and decentralized storage.
+RealNews Free Publish Core is a censorship‑resistant publishing infrastructure designed to ensure that individuals in restricted environments can safely and reliably share public‑interest information. Even under severe censorship, it provides a secure pathway for eyewitness reports, media documentation, and civic information to reach the outside world.
 
-## The Problem
+The system consists of four major components:
 
-Millions of users live behind national firewalls that restrict access to independent journalism and global perspectives.  
-Existing tools are either:
+1. **Emergency Publishing Channel**  
+   A secure, anonymous, censorship‑resistant pipeline for publishing sensitive content.
 
-- too technical for ordinary users  
-- dependent on unstable commercial proxy services (“airports”)  
-- based on outdated protocols that are easily blocked  
-- or lack transparency, sustainability, and long-term reliability  
+2. **Modern Anti‑Censorship Access Layer**  
+   A unified access layer integrating six advanced protocols: Hysteria2, Reality, VLESS, Trojan, XTLS, and XHTTP.
 
-RealNews Gateway addresses these structural issues by providing a unified, user-friendly, and verifiable platform built on modern anti-censorship technologies.
+3. **Resilient News Aggregation Module**  
+   A censorship‑resistant aggregator for independent journalism and mirror sources.
 
-## Key Features
+4. **Lightweight Anonymous BBS**  
+   A minimal, privacy‑friendly discussion board for low‑risk community interaction.
 
-- Integration of modern protocols: Hysteria2, Reality, VLESS, Trojan, XTLS, XHTTP  
-- Beginner-friendly access layer for non-technical users  
-- Resilient news aggregation and mirroring  
-- Anonymous, low-risk discussion board  
-- Secure uploader with metadata protection  
-- Open-source, auditable, and community-driven  
+This project is designed as foundational infrastructure for information freedom, not a traditional circumvention tool. It focuses on safe publishing, resilient distribution, and long‑term sustainability under adversarial conditions.
 
-RealNews Gateway is designed to be deployed by NGOs, independent media, civil society groups, and community operators to provide long-term, trustworthy access to uncensored information.
+## Difference from Traditional VPN/Proxies
+
+- **Beginner‑friendly**: Traditional proxy services (“airports”) require complex node selection and configuration. This system provides a unified six‑protocol access layer, simplifying usage for non‑technical users.  
+- **Resilience against service shutdowns**: Traditional proxy services often suffer from node shutdowns or provider exit (“runaway airports”). This system uses multi‑node mirroring and automatic routing to ensure stability.  
+- **Technical advancement**: Traditional VPN/proxy services rely on outdated protocols such as **vmess**, while this system consistently maintains six advanced protocols (Hysteria2, Reality, VLESS, Trojan, XTLS, XHTTP) with stronger censorship resistance.  
+- **Different focus**: Traditional VPN/proxy tools mainly solve “access.” This system’s core is “publishing”—ensuring suppressed content can be safely transmitted and persistently stored.
