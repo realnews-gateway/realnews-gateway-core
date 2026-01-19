@@ -1,51 +1,36 @@
-# Funding Notes (For Grant Reviewers)
+# Funding Notes
 
-This repository represents the open-source core of the RealNews Gateway project.  
-It contains the architecture, documentation, and module definitions required for transparent evaluation and public benefit.
+RealNews Free Publish Core is structured to align with funder expectations while maintaining strong boundaries between open‑source infrastructure and closed‑source commercial components.
 
-## Alignment with Media Freedom and Democratic Resilience
+## Open‑Source Scope (Fundable)
 
-RealNews Gateway directly supports:
+The following components are fully open‑source and eligible for funding:
+- Emergency Publishing Channel (core logic)
+- VPN access layer integration
+- News aggregation module
+- Anonymous BBS
+- Documentation and architecture
+- Deployment tooling for NGOs and media organizations
 
-- Access to independent journalism  
-- Circumvention of state-level censorship  
-- Secure distribution of public-interest content  
-- Community-driven information resilience  
-- Protection of non-technical users in high-risk environments  
+These components are licensed under AGPLv3 to ensure public benefit and prevent commercial exploitation without contribution.
 
-The project lowers the barrier for ordinary users to access modern anti-censorship technologies by integrating Hysteria2, Reality, VLESS, Trojan, XTLS, and XHTTP into a unified, beginner-friendly access layer.
+## Closed‑Source Scope (Not Funded)
 
-## Why Funding Is Needed
+The following components remain proprietary and are not part of the open‑source release:
+- Commercial‑grade routing optimization
+- AI‑based traffic shaping
+- Enterprise‑level dashboards
+- Large‑scale node orchestration
+- Commercial mobile/desktop apps
 
-While the core architecture is open-source, funding is required for:
+These components ensure long‑term sustainability and prevent direct replication of the full product.
 
-- Development of the VPN access layer  
-- News aggregation and mirroring infrastructure  
-- Anonymous BBS implementation  
-- Secure uploader integration  
-- Documentation, testing, and security review  
-- Deployment support for NGOs and independent media  
+## Funding Philosophy
 
-## Sustainability
+The project is designed to:
+- Maximize public benefit  
+- Protect critical intellectual property  
+- Ensure long‑term sustainability  
+- Maintain clear boundaries between open and closed components  
 
-RealNews Gateway is designed to be:
-
-- Open-source  
-- Auditable  
-- Modular  
-- Community-hostable  
-- Independent of commercial proxy providers  
-
-This ensures long-term sustainability and reduces the risks associated with airport-style subscription services, including provider shutdowns and user financial loss.
-
-## Project Readiness
-
-This repository demonstrates:
-
-- Clear architecture  
-- Defined modules  
-- Realistic roadmap  
-- Strong technical foundation  
-- Alignment with funder priorities  
-
-The project is ready for execution under a 3–6 month development cycle with appropriate support.
+This structure aligns with modern digital rights funding expectations.
