@@ -78,4 +78,23 @@ The Emergency Channel Core is designed to operate under hostile, high‑risk con
 - Mirrors automatically resync when connectivity returns.
 - Offline bundles ensure distribution even during shutdowns.
 
-- 
+## Workflow Summary
+
+The Emergency Channel Core provides a secure, end‑to‑end pipeline that transforms raw user submissions into durable, censorship‑resistant public records. Its workflow ensures anonymity, integrity, and long‑term accessibility.
+
+### End‑to‑End Flow
+1. User submits encrypted content through the unified access layer.
+2. Sanitizer removes metadata and normalizes formats.
+3. Processing module deduplicates and classifies the content.
+4. Router selects optimal mirror nodes and applies fallback logic.
+5. Storage layer persists the content locally or on decentralized networks.
+6. Distributor delivers the final output to NGO/media partners and public mirrors.
+
+### Key Guarantees
+- No identity linkage at any stage.
+- All data is encrypted during transit and storage.
+- Multi‑node replication ensures resilience.
+- Decentralized storage prevents deletion or censorship.
+- Offline bundles enable distribution during network shutdowns.
+
+This workflow enables users in hostile environments to safely publish critical information while maintaining complete anonymity and ensuring global availability.
