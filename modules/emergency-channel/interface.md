@@ -1,3 +1,59 @@
+# Emergency Publishing Channel — Interface Specification
+
+This document defines all external and internal interfaces of the Emergency Publishing Channel, including submission APIs, mirror synchronization APIs, NGO/media delivery APIs, and internal module interfaces.
+
+## 1. Submission API
+
+### POST /submit
+Submit encrypted content for processing.
+
+**Headers**
+- Authorization: Bearer <token>
+- X-Anonymous-ID: <randomized-id>
+
+**Body**
+{
+  "payload": "<encrypted-bytes>",
+  "type": "text | image | video | document",
+  "timestamp": "<client-timestamp>"
+}
+
+**Response**
+{
+  "status": "ok",
+  "submission_id": "<uuid>"
+}
+
+
+## 2. Mirror Sync API
+
+### POST /mirror/sync
+Used by trusted mirror nodes to synchronize new content.
+
+**Body**
+{
+  "node_id": "<uuid>",
+  "last_sync": "<timestamp>"
+}
+
+**Response**
+{
+  "items": [
+    {
+      "submission_id": "<uuid>",
+      "payload": "<encrypted-bytes>",
+      "type": "text | image | video | document",
+      "timestamp": "<server-timestamp>"
+    }
+  ]
+}
+
+
+
+
+
+
+
 
 Emergency Publishing Channel — Interface Specification
 
