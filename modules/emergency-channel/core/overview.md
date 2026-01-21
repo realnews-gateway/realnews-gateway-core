@@ -32,3 +32,50 @@ The Emergency Channel Core operates through five secure, anonymized stages that 
 - Stores content in local or decentralized storage (IPFS/Arweave).
 - Syncs with NGO/media partners when applicable.
 - Publishes to public mirrors for global accessibility.
+
+## Module Structure
+
+The Emergency Channel Core is composed of four primary submodules, each responsible for a critical stage of the submission pipeline.
+
+### 1. Sanitizer
+Handles metadata removal, format normalization, and safety preprocessing for all incoming content.
+
+### 2. Router
+Determines optimal mirror nodes, applies fallback logic, and manages multi-hop anonymized routing.
+
+### 3. Storage
+Provides both local and decentralized persistence layers, supporting IPFS, Arweave, and encrypted local storage.
+
+### 4. Distributor
+Delivers processed content to NGO/media partners, public mirror nodes, and optional offline distribution channels.
+
+## Security Guarantees
+
+The Emergency Channel Core is designed to operate under hostile, high‑risk conditions. Its security guarantees focus on identity protection, data integrity, and long‑term survivability.
+
+### 1. Identity Protection
+- No publishing identity is linked to account identity.
+- All submissions are encrypted end‑to‑end.
+- No IP, device, or location metadata is retained.
+
+### 2. Data Integrity
+- Cryptographic hashing ensures tamper detection.
+- Deduplication prevents malicious flooding.
+- Sanitization removes all embedded metadata from files.
+
+### 3. Transport Security
+- Multi‑hop routing prevents origin tracing.
+- Fallback logic maintains delivery under network interference.
+- All channels use encrypted transport layers.
+
+### 4. Storage Security
+- Decentralized storage ensures content cannot be erased.
+- Local storage is encrypted and access‑controlled.
+- Mirror nodes verify content integrity before replication.
+
+### 5. Operational Resilience
+- System remains functional under partial node failure.
+- Mirrors automatically resync when connectivity returns.
+- Offline bundles ensure distribution even during shutdowns.
+
+- 
