@@ -40,3 +40,48 @@ The Publisher module currently supports the following channel types:
   Minimal text-only feeds optimized for extreme censorship.
 - **Steganographic channels**  
   Embedding content into benign-looking carriers (optional, pluggable).
+
+---
+
+## Channel Selection Logic
+
+The Publisher module selects channels based on:
+
+- **Content type**  
+  (e.g., long-form article vs. short alert)
+- **Urgency level**  
+  (e.g., breaking news vs. scheduled digest)
+- **Network conditions**  
+  (e.g., censorship level, connectivity quality)
+- **User preferences**  
+  (if applicable)
+- **Channel availability**  
+  (fallback if primary channels fail)
+
+The selection logic is deterministic but configurable, allowing deployments to tune behavior based on operational needs.
+
+---
+
+## Extensibility
+
+New channels can be added by implementing:
+
+1. A **formatter** for the channel’s required payload format  
+2. A **delivery adapter** for sending the payload  
+3. Optional **health checks** and **fallback rules**
+
+This ensures that the Publisher module remains future‑proof and adaptable to emerging communication technologies.
+
+---
+
+## Summary
+
+The Publisher channel system provides:
+
+- Multiple independent delivery paths  
+- Strong resilience against censorship  
+- Modular and extensible architecture  
+- Support for both modern and legacy environments  
+- Seamless integration with the Publisher pipeline
+
+It ensures that verified content can reach users regardless of network conditions or adversarial interference.
