@@ -40,3 +40,82 @@ The system uses a combination of modern, well‑vetted primitives:
 - PBKDF2 (legacy compatibility)
 
 All primitives are selected for security, performance, and long‑term maintainability.
+
+---
+
+## Key Management
+
+The system enforces strict key lifecycle rules:
+
+- **Key generation**  
+  Uses secure randomness and modern curves.
+
+- **Key rotation**  
+  Periodic rotation to limit exposure.
+
+- **Key revocation**  
+  Immediate invalidation when compromise is suspected.
+
+- **Key scoping**  
+  Different modules use different keys to minimize blast radius.
+
+- **Key storage**  
+  Keys are stored encrypted and never logged.
+
+- **Ephemeral keys**  
+  Used for short‑lived sessions and internal transport.
+
+Key material is never exposed to untrusted components.
+
+---
+
+## Signing & Verification
+
+Digital signatures are used to ensure:
+
+- Content authenticity  
+- Module‑to‑module trust  
+- Protection against tampering  
+- Auditability of critical operations  
+
+Every module verifies signatures before accepting sensitive data.
+
+---
+
+## Encryption in Transit
+
+All internal communication channels enforce:
+
+- TLS with modern cipher suites  
+- Optional post‑quantum key exchange  
+- Replay protection  
+- Strict certificate validation  
+
+Fallback channels may use lightweight encryption when full TLS is unavailable.
+
+---
+
+## Encryption at Rest
+
+Stored data is protected using:
+
+- AES‑256‑GCM  
+- Per‑module encryption keys  
+- Optional per‑record encryption  
+- Integrity tags to detect corruption  
+
+Storage never contains raw or unprotected data.
+
+---
+
+## Summary
+
+The cryptographic subsystem provides:
+
+- Strong encryption for data in motion and at rest  
+- Modern, secure primitives  
+- Strict key lifecycle management  
+- Robust signing and verification  
+- Defense‑in‑depth across all modules  
+
+It ensures that the Emergency Channel remains secure even under adversarial conditions.
