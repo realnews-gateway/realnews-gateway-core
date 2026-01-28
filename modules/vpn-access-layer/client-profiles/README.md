@@ -1,9 +1,36 @@
 # Client Profiles
 
 The Client Profiles subsystem provides platform‑specific configuration templates for connecting to the VPN Access Layer.  
-These profiles define recommended settings, transport preferences, fallback behavior, and camouflage parameters for each supported platform.
+Each profile defines recommended transport preferences, fallback behavior, camouflage settings, and system‑level considerations for a specific operating system.
 
-This subsystem ensures that clients on different devices can reliably and safely access the system under censorship.
+These profiles ensure consistent, censorship‑resistant access across mobile, desktop, and embedded environments.
+
+---
+
+## Contents
+
+This directory includes platform‑specific profiles:
+
+- **android.md**  
+  QUIC‑first mobile profile optimized for unstable networks.
+
+- **ios.md**  
+  TLS‑first profile aligned with iOS system constraints and TLS behavior.
+
+- **windows.md**  
+  Desktop‑optimized profile with hybrid TLS/QUIC strategy.
+
+- **linux.md**  
+  Flexible profile for servers, desktops, and CLI environments.
+
+- **mac.md**  
+  TLS‑first profile optimized for macOS network stack and Safari/Chrome fingerprints.
+
+- **embedded.md**  
+  Lightweight profile for routers, IoT devices, and constrained hardware.
+
+- **client-profiles.md**  
+  High‑level specification of client profile behavior and integration.
 
 ---
 
@@ -14,85 +41,56 @@ Client Profiles enable:
 - Platform‑optimized access configurations  
 - Predefined protocol preferences (TLS, QUIC, HTTP, CDN)  
 - Region‑aware fallback chains  
-- Camouflage‑compatible settings for each OS  
+- Camouflage‑compatible TLS/QUIC fingerprints  
 - Minimal user configuration for fast onboarding  
-- Consistent behavior across mobile, desktop, and embedded devices  
+- Consistent behavior across all supported platforms  
 
 They provide a standardized way to deploy the VPN Access Layer across diverse environments.
 
 ---
 
-## Directory Structure
+## Design Principles
 
-This directory includes:
+All client profiles follow these principles:
 
-- **android.md**  
-  Recommended configuration for Android clients, including QUIC‑first profiles and mobile‑optimized fallback.
+- **Platform awareness**  
+  Each OS has unique network behavior and constraints.
 
-- **ios.md**  
-  iOS‑specific constraints, TLS‑first profiles, and system‑level limitations.
+- **Stealth by default**  
+  Profiles prioritize camouflage‑compatible transports.
 
-- **windows.md**  
-  Desktop‑optimized profiles with high‑performance QUIC and TLS fallback.
-
-- **linux.md**  
-  CLI‑friendly profiles for servers, desktops, and embedded Linux systems.
-
-- **embedded.md**  
-  Lightweight profiles for routers, IoT devices, and constrained hardware.
-
-- **client-profiles.md**  
-  High‑level specification of client profile behavior and integration.
-
----
-
-## Key Features
-
-- **Platform‑optimized defaults**  
-  Each OS receives a configuration tuned for its network stack and limitations.
-
-- **Protocol preference tuning**  
-  Example:
-  - Android → QUIC‑first  
-  - iOS → TLS‑first  
-  - Windows → QUIC/TLS hybrid  
-  - Linux → configurable  
-
-- **Region‑aware behavior**  
-  Profiles automatically reference fallback region profiles.
-
-- **Camouflage compatibility**  
-  Ensures TLS fingerprints and SNI behavior match platform expectations.
+- **Resilience**  
+  Built‑in fallback chains ensure persistent connectivity.
 
 - **Minimal configuration**  
-  Users can connect with minimal manual setup.
+  Users should be able to connect with minimal manual setup.
 
-- **Extensible design**  
-  New platforms (e.g., macOS, OpenWrt) can be added easily.
+- **Extensibility**  
+  New platforms can be added without breaking existing ones.
 
 ---
 
 ## Integration
 
-Client Profiles connect to:
+Client Profiles integrate with:
 
 - **entrypoints/**  
-  Define which entrypoints each platform should prefer.
-
-- **fallback/**  
-  Reference region‑specific fallback chains.
+  Selecting the appropriate entrypoint type per platform.
 
 - **camouflage/**  
-  Ensure platform‑specific TLS/QUIC fingerprints are applied.
+  Ensuring TLS/QUIC fingerprints match platform expectations.
+
+- **fallback/**  
+  Referencing region‑specific fallback strategies.
 
 - **session-init/**  
-  Provide negotiation parameters for each platform.
+  Providing negotiation parameters for each OS.
 
-Client Profiles are the user‑facing configuration layer of the VPN Access Layer.
+Client Profiles form the user‑facing configuration layer of the VPN Access Layer.
 
 ---
 
 ## Summary
 
-The Client Profiles subsystem provides platform‑specific configuration templates that ensure reliable, censorship‑resistant access across mobile, desktop, and embedded environments.  
-By tuning protocol preferences, fallback behavior, and camouflage settings for each OS, it enables consistent and secure connectivity under hostile network conditions.
+The Client Profiles subsystem provides platform‑specific templates that ensure reliable, censorship‑resistant access across mobile, desktop, and embedded environments.  
+By tuning protocol preferences, fallback behavior, and camouflage settings for each OS—including macOS—it enables consistent and secure connectivity under hostile network conditions.
