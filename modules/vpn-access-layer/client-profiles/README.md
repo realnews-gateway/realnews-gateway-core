@@ -1,96 +1,212 @@
 # Client Profiles
 
-The Client Profiles subsystem provides platform‑specific configuration templates for connecting to the VPN Access Layer.  
-Each profile defines recommended transport preferences, fallback behavior, camouflage settings, and system‑level considerations for a specific operating system.
+Client profiles define platform-specific behavior for session initialization, transport negotiation, camouflage selection, fallback logic, and error normalization.  
+Each platform has unique network characteristics, TLS/QUIC fingerprints, and OS-level constraints that must be reflected in the system's behavior.
 
-These profiles ensure consistent, censorship‑resistant access across mobile, desktop, and embedded environments.
-
----
-
-## Contents
-
-This directory includes platform‑specific profiles:
-
-- **android.md**  
-  QUIC‑first mobile profile optimized for unstable networks.
-
-- **ios.md**  
-  TLS‑first profile aligned with iOS system constraints and TLS behavior.
-
-- **windows.md**  
-  Desktop‑optimized profile with hybrid TLS/QUIC strategy.
-
-- **linux.md**  
-  Flexible profile for servers, desktops, and CLI environments.
-
-- **mac.md**  
-  TLS‑first profile optimized for macOS network stack and Safari/Chrome fingerprints.
-
-- **embedded.md**  
-  Lightweight profile for routers, IoT devices, and constrained hardware.
-
-- **client-profiles.md**  
-  High‑level specification of client profile behavior and integration.
+Client profiles ensure that the system behaves like a native application on each platform and blends into legitimate traffic patterns.
 
 ---
 
 ## Purpose
 
-Client Profiles enable:
+Client profiles provide:
 
-- Platform‑optimized access configurations  
-- Predefined protocol preferences (TLS, QUIC, HTTP, CDN)  
-- Region‑aware fallback chains  
-- Camouflage‑compatible TLS/QUIC fingerprints  
-- Minimal user configuration for fast onboarding  
-- Consistent behavior across all supported platforms  
+- Platform-specific TLS/QUIC fingerprints  
+- Transport priority ordering  
+- Camouflage profile selection  
+- Bootstrap behavior  
+- Fallback chain overrides  
+- Timing and retry adjustments  
+- OS-level networking constraints  
 
-They provide a standardized way to deploy the VPN Access Layer across diverse environments.
+Profiles ensure that each platform behaves realistically and avoids cross-platform fingerprint mismatches.
 
 ---
 
-## Design Principles
+## Platform Profiles
 
-All client profiles follow these principles:
+The system defines profiles for:
 
-- **Platform awareness**  
-  Each OS has unique network behavior and constraints.
+- Windows  
+- macOS  
+- iOS  
+- Android  
+- Linux  
 
-- **Stealth by default**  
-  Profiles prioritize camouflage‑compatible transports.
+Each profile includes:
 
-- **Resilience**  
-  Built‑in fallback chains ensure persistent connectivity.
+- transport_priority  
+- tls_fingerprint  
+- quic_fingerprint  
+- sni_strategy  
+- bootstrap_behavior  
+- fallback_chain  
+- timing_profile  
+- notes  
 
-- **Minimal configuration**  
-  Users should be able to connect with minimal manual setup.
+---
 
-- **Extensibility**  
-  New platforms can be added without breaking existing ones.
+## Windows Profile
+
+    transport_priority:
+      - TLS
+      - QUIC
+      - HTTP/2
+      - CDN
+
+    tls_fingerprint: Chrome (Windows)
+    quic_fingerprint: Chrome QUIC
+    sni_strategy: rotating or fronted (region-dependent)
+
+    bootstrap_behavior:
+      - TLS-first handshake
+      - QUIC attempted after TLS success
+      - Windows-native timing patterns
+
+    fallback_chain: global-default
+    timing_profile: desktop-normal
+
+    notes:
+      Windows QUIC support varies by version; TLS-first is safest.
+
+---
+
+## macOS Profile
+
+    transport_priority:
+      - TLS
+      - QUIC
+      - HTTP/2
+      - CDN
+
+    tls_fingerprint: Safari (macOS)
+    quic_fingerprint: Safari QUIC (if available)
+    sni_strategy: stable SNI or ECH (if supported)
+
+    bootstrap_behavior:
+      - Safari-style TLS handshake
+      - QUIC enabled only on newer macOS versions
+
+    fallback_chain: global-default
+    timing_profile: desktop-smooth
+
+    notes:
+      Safari fingerprints are low entropy and safe in high-risk regions.
+
+---
+
+## iOS Profile
+
+    transport_priority:
+      - TLS
+      - QUIC
+      - HTTP/2
+      - CDN
+
+    tls_fingerprint: Safari (iOS)
+    quic_fingerprint: Safari QUIC (mobile)
+    sni_strategy: stable SNI or ECH
+
+    bootstrap_behavior:
+      - Mobile-optimized timing
+      - TLS-first due to iOS network stack behavior
+
+    fallback_chain: sni-blocking (region-dependent)
+    timing_profile: mobile-optimized
+
+    notes:
+      iOS aggressively caches TLS state; fingerprints must match Safari exactly.
+
+---
+
+## Android Profile
+
+    transport_priority:
+      - QUIC
+      - TLS
+      - HTTP/2
+      - CDN
+
+    tls_fingerprint: Chrome (Android)
+    quic_fingerprint: Chrome QUIC (mobile)
+    sni_strategy: rotating or fronted
+
+    bootstrap_behavior:
+      - QUIC-first
+      - Mobile timing and packet-size normalization
+
+    fallback_chain: quic-blocking (region-dependent)
+    timing_profile: mobile-fast
+
+    notes:
+      Android QUIC is widely deployed; QUIC-first improves performance and stealth.
+
+---
+
+## Linux Profile
+
+    transport_priority:
+      - QUIC
+      - TLS
+      - HTTP/2
+      - CDN
+
+    tls_fingerprint: Chrome (Linux)
+    quic_fingerprint: Chrome QUIC
+    sni_strategy: rotating
+
+    bootstrap_behavior:
+      - QUIC-first
+      - Desktop timing with reduced jitter
+
+    fallback_chain: tls-fingerprint-rotation (region-dependent)
+    timing_profile: desktop-normal
+
+    notes:
+      Linux environments vary; Chrome fingerprints are safest.
+
+---
+
+## Timing Profiles
+
+Timing profiles define platform-specific retry and handshake timing:
+
+### desktop-normal
+    quic_retry: 200–600 ms
+    tls_retry: 300–900 ms
+    http2_retry: 500–1200 ms
+
+### desktop-smooth
+    quic_retry: 250–700 ms
+    tls_retry: 350–950 ms
+
+### mobile-optimized
+    quic_retry: 150–450 ms
+    tls_retry: 250–700 ms
+
+### mobile-fast
+    quic_retry: 120–350 ms
+    tls_retry: 200–600 ms
+
+Timing randomness prevents fingerprinting.
 
 ---
 
 ## Integration
 
-Client Profiles integrate with:
+Client profiles integrate with:
 
-- **entrypoints/**  
-  Selecting the appropriate entrypoint type per platform.
+- session-init/bootstrap-flow.md  
+- camouflage/tls-fingerprints.md  
+- entrypoints/  
+- fallback/chains.md  
+- fallback/region-profiles.md  
 
-- **camouflage/**  
-  Ensuring TLS/QUIC fingerprints match platform expectations.
-
-- **fallback/**  
-  Referencing region‑specific fallback strategies.
-
-- **session-init/**  
-  Providing negotiation parameters for each OS.
-
-Client Profiles form the user‑facing configuration layer of the VPN Access Layer.
+Profiles override defaults when platform-specific behavior is required.
 
 ---
 
 ## Summary
 
-The Client Profiles subsystem provides platform‑specific templates that ensure reliable, censorship‑resistant access across mobile, desktop, and embedded environments.  
-By tuning protocol preferences, fallback behavior, and camouflage settings for each OS—including macOS—it enables consistent and secure connectivity under hostile network conditions.
+Client profiles define platform-specific behavior for transport negotiation, camouflage selection, fallback logic, and timing normalization.  
+By matching native application behavior on each platform, the system avoids cross-platform inconsistencies and blends seamlessly into legitimate traffic patterns.
