@@ -1,9 +1,9 @@
 # Modules Directory
 
-The Modules directory contains all runtime subsystems of the Emergency Publishing architecture.  
+The Modules directory contains all supporting runtime subsystems of the Emergency Publishing System.  
 Each module represents a distinct functional layer, designed to be independently testable, deployable, and extensible.
 
-These modules implement the system’s core capabilities: censorship‑resistant transport, content aggregation, pseudonymous communication, and emergency delivery.
+These modules provide ingestion, access, and content‑generation capabilities that feed into the core system: the **Emergency Channel**.
 
 ---
 
@@ -24,10 +24,6 @@ This directory includes the following modules:
   Users authenticate with lightweight accounts, but all public identity is system‑generated (name + avatar).  
   Supports metadata stripping, moderation, content sanitization, and censorship‑resistant discussion.
 
-- **emergency-channel/**  
-  Core subsystem for multi‑protocol, multi‑hop delivery of critical content.  
-  Includes routing logic, distribution pipelines, sanitization, secure storage, and fallback transports for emergency publishing.
-
 (Additional modules may be added as the system evolves.)
 
 ---
@@ -43,33 +39,29 @@ All modules follow these architectural principles:
   Modules can evolve without breaking system‑wide compatibility.
 
 - **Separation of concerns**  
-  Transport, aggregation, publishing, and user communication are clearly separated.
+  Transport, aggregation, and user‑generated content are clearly separated.
 
 - **Censorship resistance**  
-  All modules are designed to operate under hostile network conditions, including active blocking and DPI.
+  All modules are designed to operate under hostile network conditions.
 
 - **Stealth and resilience**  
-  Protocols and workflows mimic legitimate traffic and recover gracefully from failure.
+  Protocols and workflows mimic legitimate traffic and recover from failure.
 
 ---
 
 ## Integration
 
-Modules interact via shared interfaces and pipelines:
+Modules interact with the core system via shared interfaces and pipelines:
 
 - **Transport and fallback logic** are provided by `vpn-access-layer/`  
 - **News ingestion and processing** are handled by `news-aggregation/`  
 - **User‑generated content** is handled by `anonymous-bbs/`  
-- **Emergency routing and distribution** are handled by `emergency-channel/`  
-- **Content flows** are coordinated through parsing, deduplication, classification, and distribution layers  
-- **Storage and retrieval** are managed by each module’s internal storage subsystem  
+- **Emergency routing and distribution** are handled by the root‑level `emergency-channel/`  
 - **Region‑aware behavior** is supported across all modules
 
 ---
 
 ## Summary
 
-The Modules directory defines the system’s runtime architecture.  
-Each submodule implements a critical capability—transport, aggregation, pseudonymous communication, or emergency delivery—and together they form a resilient, censorship‑resistant communication ecosystem.
-
-This directory is the operational core of the Emergency Publishing system.
+The Modules directory defines the supporting runtime architecture of the Emergency Publishing System.  
+Each submodule implements a critical capability—transport, aggregation, or pseudonymous communication—and together they feed content into the core **Emergency Channel**.
