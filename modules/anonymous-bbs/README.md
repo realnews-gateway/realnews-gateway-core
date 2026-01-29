@@ -1,7 +1,7 @@
 # Anonymous BBS Module
 
 The anonymous BBS module provides a censorship-resistant, privacy-preserving message board system designed for high-risk environments.  
-It enables users to publish short text posts, share updates, and participate in discussions without revealing identity, metadata, or network fingerprints.
+Users create accounts for access control and rate limiting, but all public-facing identity is pseudonymous: posts are shown under system-generated names and avatars, never exposing real user information.
 
 This module is optimized for regions with strict censorship, intermittent connectivity, and active surveillance.
 
@@ -11,11 +11,12 @@ This module is optimized for regions with strict censorship, intermittent connec
 
 The anonymous BBS module provides:
 
-- Anonymous posting without account creation
+- Account-based access with pseudonymous public identity
+- System-generated display names and avatars per account or per thread
+- No exposure of real user identifiers in public views
 - Metadata stripping and privacy-preserving message formats
 - Region-aware routing and replication
 - Censorship-resistant distribution channels
-- Integration with emergency publishing workflows
 - Optional moderation and spam filtering
 - Compatibility with low-bandwidth or unstable networks
 
@@ -25,30 +26,37 @@ These capabilities ensure safe and resilient communication for users in hostile 
 
 ## Architecture Overview
 
-The BBS system consists of four major components:
+The BBS system consists of five major components:
 
-### 1. Client Interface
+### 1. Account Layer
+    - Lightweight account creation
+    - Minimal stored information (no real-name, no phone/email required)
+    - Used for access control, rate limiting, and abuse prevention
+    - Not exposed in any public-facing message metadata
+
+### 2. Pseudonym Layer
+    - Generates random display names and avatars
+    - Can be per-account, per-thread, or per-session
+    - Ensures that public identity is decoupled from the underlying account
+    - Prevents correlation of posts to real-world identity
+
+### 3. Client Interface
     - Minimal UI for posting and reading messages
-    - No login or persistent identifiers
+    - Shows only pseudonymous names and avatars
+    - No public exposure of account IDs or login details
     - Optional offline mode with delayed posting
 
-### 2. Message Gateway
-    - Receives posts from clients
-    - Strips metadata (IP, timestamps, headers)
-    - Normalizes message format
+### 4. Message Gateway
+    - Receives posts from authenticated accounts
+    - Strips network metadata (IP, headers)
+    - Attaches pseudonymous identity (name + avatar) for display
     - Applies spam and abuse filters
 
-### 3. Storage and Replication Layer
+### 5. Storage and Distribution Layer
     - Stores messages in append-only logs
     - Replicates across multiple regions
     - Supports partial replication for high-risk areas
-    - Ensures eventual consistency
-
-### 4. Distribution Layer
-    - Delivers messages to clients
-    - Uses region-aware routing
-    - Integrates with emergency publishing channels
-    - Supports low-bandwidth delivery formats
+    - Delivers messages via region-aware, censorship-resistant channels
 
 ---
 
@@ -58,7 +66,7 @@ The module is organized as follows:
 
     anonymous-bbs/
     ├── README.md              # Overview and architecture
-    ├── message-format.md      # Anonymous message structure and metadata stripping
+    ├── message-format.md      # Message structure, pseudonymous identity, metadata stripping
     ├── gateway.md             # Message ingestion, filtering, and normalization
     ├── storage.md             # Append-only logs, replication, and consistency
     └── distribution.md        # Region-aware delivery and censorship resistance
@@ -71,20 +79,25 @@ Each file documents a major subsystem of the anonymous BBS.
 
 The BBS follows these principles:
 
-### Anonymity by Design
-    - No accounts
-    - No persistent identifiers
-    - No IP or device metadata stored
+### Account-Based Control, Pseudonymous Exposure
+    - Accounts exist for access control and abuse prevention
+    - Public-facing identity is always pseudonymous
+    - No real user information appears in messages or public APIs
+
+### Anonymity in Public Space
+    - No public account IDs
+    - No IP or device metadata stored with messages
+    - Pseudonyms are system-generated and non-identifying
 
 ### Minimal Metadata
-    - Only message body and optional tags
-    - Timestamps are coarse-grained or randomized
-    - No client-side identifiers
+    - Only message body, pseudonymous identity, and coarse timestamps
+    - Timestamps may be bucketed or jittered
+    - No client-side identifiers in public data
 
 ### Censorship Resistance
-    - Region-aware routing
-    - Multi-path replication
-    - Integration with fallback transports
+    - Region-aware routing and replication
+    - Multi-path delivery
+    - Integration with fallback transports and VPN access layer
 
 ### Low Bandwidth Operation
     - Compact message formats
@@ -92,9 +105,9 @@ The BBS follows these principles:
     - Offline posting support
 
 ### Safety and Abuse Prevention
-    - Spam filtering
+    - Spam filtering and rate limiting at the account layer
     - Optional keyword moderation
-    - Rate limiting without identity tracking
+    - No need for real-world identity to enforce basic rules
 
 ---
 
@@ -106,10 +119,10 @@ The anonymous BBS integrates with:
   Ensures anonymous and censorship-resistant connectivity.
 
 - **emergency-channel/**  
-  Allows urgent posts to be promoted to emergency distribution.
+  Allows urgent or high-impact posts to be promoted to emergency distribution.
 
 - **publisher/**  
-  Enables selected BBS posts to be published externally.
+  Enables selected BBS posts to be published externally, still under pseudonymous identity.
 
 - **region-config/**  
   Provides region-aware routing and replication policies.
@@ -119,4 +132,4 @@ The anonymous BBS integrates with:
 ## Summary
 
 The anonymous BBS module provides a secure, censorship-resistant message board system designed for high-risk environments.  
-By combining anonymous posting, metadata stripping, region-aware routing, and resilient replication, it enables safe communication under hostile network conditions.
+By combining account-based access control with strictly pseudonymous public identity, metadata stripping, region-aware routing, and resilient replication, it enables safe communication without exposing real user information.
