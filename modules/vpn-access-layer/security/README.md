@@ -1,114 +1,93 @@
-# Security Layer
+# Security Architecture
 
-The Security Layer defines the threat model, defensive strategies, and protocol‑level protections used by the VPN Access Layer.  
-It ensures that all access paths remain safe, stealthy, and resilient against censorship, surveillance, and active attacks.
+The security subsystem defines the threat model, DPI evasion strategies, active probing defenses, and overall security guarantees of the VPN access layer.  
+This module ensures that the system remains resilient against state-level adversaries, network-level attackers, and active probing systems while maintaining stealth and indistinguishability from legitimate traffic.
 
-This subsystem provides the security foundation for all entrypoints, camouflage mechanisms, fallback strategies, and session initialization flows.
-
----
-
-## Purpose
-
-The Security Layer enables:
-
-- A clear threat model for hostile network environments  
-- Defenses against DPI, traffic classification, and active probing  
-- Protection against replay attacks, metadata leakage, and fingerprinting  
-- Secure integration with camouflage and session-init layers  
-- Region‑specific security considerations  
-- Continuous adaptation to evolving censorship techniques  
-
-It ensures that the VPN Access Layer remains robust under real‑world adversarial pressure.
+Security is integrated across all layers of the VPN access layer, including camouflage, session initialization, fallback logic, and transport behavior.
 
 ---
 
-## Directory Structure
+## Objectives
 
-This directory includes:
+The security subsystem provides:
+
+- A formal threat model  
+- DPI evasion strategies  
+- Active probing defenses  
+- Traffic analysis resistance  
+- Protocol-level obfuscation  
+- Error normalization and timing camouflage  
+- Region-aware security adaptations  
+
+These components ensure that the system remains robust under adversarial conditions.
+
+---
+
+## Components
+
+The security subsystem consists of:
 
 - **threat-model.md**  
-  Defines adversaries, capabilities, and attack surfaces relevant to the VPN Access Layer.
+  Defines adversary capabilities, attack surfaces, and security guarantees.
 
 - **dpi-evasion.md**  
-  Techniques for evading deep packet inspection and traffic classifiers.
+  Describes techniques for evading deep packet inspection, including TLS/QUIC camouflage and handshake obfuscation.
 
 - **active-probing-defense.md**  
-  Defenses against active probing, handshake manipulation, and protocol impersonation.
+  Defines defenses against active probing, replay attacks, and protocol fingerprinting.
 
-- **security.md**  
-  High-level specification of security requirements, guarantees, and integration.
-
----
-
-## Key Features
-
-- **Comprehensive threat model**  
-  Covers:
-  - state‑level censors  
-  - ISP‑level filtering  
-  - active probing systems  
-  - machine‑learning traffic classifiers  
-  - throttling and selective blocking  
-
-- **DPI evasion**  
-  Uses:
-  - TLS fingerprint shaping  
-  - QUIC traffic normalization  
-  - HTTP camouflage  
-  - SNI randomization  
-  - packet size/timing obfuscation  
-
-- **Active probing resistance**  
-  Ensures:
-  - no static signatures  
-  - no predictable handshakes  
-  - no distinguishable error messages  
-  - protocol mimicry under probe conditions  
-
-- **Metadata minimization**  
-  Reduces exposure of:
-  - client identifiers  
-  - session tokens  
-  - timing patterns  
-  - transport‑level hints  
-
-- **Defense‑in‑depth**  
-  Security is layered across:
-  - entrypoints  
-  - camouflage  
-  - session-init  
-  - fallback  
-  - routing  
-
-- **Modular and extensible**  
-  New defenses can be added without breaking existing components.
+These documents collectively define the security posture of the VPN access layer.
 
 ---
 
-## Integration
+## Integration with Other Modules
 
-The Security Layer connects to:
-
-- **entrypoints/**  
-  Ensures all inbound traffic is indistinguishable from legitimate traffic.
+Security integrates with:
 
 - **camouflage/**  
-  Provides security constraints for TLS/QUIC fingerprinting and mimicry.
+  TLS fingerprints, SNI strategies, handshake obfuscation.
 
 - **session-init/**  
-  Ensures key exchange and negotiation are safe under adversarial conditions.
+  Key exchange, transport negotiation, bootstrap flow.
 
 - **fallback/**  
-  Adjusts fallback behavior based on detected attacks or interference.
+  Error normalization, region-aware fallback chains.
 
-- **emergency-publishing/security/**  
-  Aligns with system‑wide threat models and guarantees.
+- **entrypoints/**  
+  Protocol-specific entrypoint behavior.
 
-Security is the backbone of the VPN Access Layer’s resilience.
+- **client-profiles/**  
+  Platform-specific security adaptations.
+
+Security is not a standalone module; it is embedded throughout the system.
+
+---
+
+## Security Principles
+
+The system follows these core principles:
+
+### Defense in Depth
+Multiple layers of protection ensure resilience even if one layer is compromised.
+
+### Indistinguishability
+Traffic must be indistinguishable from legitimate TLS/QUIC/HTTP traffic.
+
+### Region Awareness
+Security posture adapts to local censorship and adversary capabilities.
+
+### Minimal Attack Surface
+Avoid unnecessary protocol features, metadata, or identifiers.
+
+### Active Probing Resistance
+Endpoints must not reveal themselves under probing or replay attempts.
+
+### Error Normalization
+All failures must resemble real-world browser or CDN errors.
 
 ---
 
 ## Summary
 
-The Security Layer defines the threat model and defensive strategies that protect the VPN Access Layer from censorship, surveillance, and active attacks.  
-By combining DPI evasion, active probing resistance, metadata minimization, and layered defenses, it ensures that users can safely and reliably access the system—even in the most hostile network environments.
+The security subsystem defines the threat model, DPI evasion strategies, and active probing defenses that protect the VPN access layer from state-level adversaries.  
+By integrating security across camouflage, session initialization, fallback logic, and transport behavior, the system maintains strong censorship resistance and stealth under hostile network conditions.
