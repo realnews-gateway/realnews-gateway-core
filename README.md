@@ -1,169 +1,119 @@
-# RealNews Free Publish Core
+# Emergency Publishing System
 
-## 🔥 A Censorship‑Resistant Free Publishing Infrastructure
+The Emergency Publishing System is a censorship-resistant communication architecture designed to deliver critical information under hostile network conditions. It provides a unified platform for news aggregation, pseudonymous user posts, and multi-protocol content distribution, all centered around a secure and resilient core subsystem: the Emergency Channel.
 
-RealNews Free Publish Core is an open-source **information freedom infrastructure** designed to empower individuals in censored environments to safely and reliably **publish** public‑interest content that would otherwise be blocked, deleted, or silenced.
-
-It is designed as a foundational infrastructure for information freedom, not a traditional circumvention tool.
-
-At the heart of the system is a secure, censorship‑resistant **Emergency Publishing Channel** — enabling eyewitness reports, photos, videos, and civic documentation to reach the outside world even under severe censorship.
-
-RealNews Free Publish Core is not just a circumvention tool.  
-It is a **publishing infrastructure**, a **resilient media pipeline**, and a **public‑interest safeguard**.
-
-The system integrates:
-
-- A modern VPN access layer (Hysteria2, Reality, VLESS, Trojan, XTLS, XHTTP)  
-- A censorship‑resistant Emergency Publishing Channel  
-- A resilient news aggregation module  
-- A lightweight anonymous discussion board  
-- A secure uploader with decentralized storage (IPFS / Arweave)  
-
-This repository contains the open-source core architecture, documentation, and module definitions for the RealNews Free Publish system.
+This repository contains the full system architecture, modules, and documentation required for development, deployment, and review.
 
 ---
 
-## 🚨 Emergency Publishing Channel
+## Repository Structure
 
-The Emergency Publishing Channel is the core of the project.  
-It provides a safe, anonymous, censorship‑resistant pathway for users to publish:
+The repository is organized into two major sections:
 
-- Eyewitness reports  
-- Photos and videos  
-- Public‑interest documentation  
-- Content deleted by domestic platforms  
-- Information blocked by state‑level censorship  
+### 1. Core System
+- emergency-channel/
+- architecture/
 
-Key features:
+The Emergency Channel is the backbone of the system. It handles:
+- Sanitization
+- Storage
+- Routing
+- Multi-protocol distribution
+- Region-aware delivery
+- Fallback transports
 
-- Anonymous submission  
-- Metadata stripping  
-- Optional encryption  
-- Multi-node mirroring  
-- Decentralized storage (IPFS / Arweave)  
-- Automatic distribution to NGOs, journalists, and independent media  
+The architecture/ directory contains high-level design documents describing system behavior, data flow, security, and deployment models.
 
-This ensures that suppressed voices can still reach the public, even under severe censorship.
+### 2. Supporting Modules
+- modules/
 
----
+Supporting modules operate independently but integrate with the Emergency Channel. They include:
+- vpn-access-layer: covert access and fallback routing
+- news-aggregation: ingestion and normalization of external sources
+- anonymous-bbs: pseudonymous posting with metadata minimization
 
-## 🌐 Modern Anti‑Censorship Access Layer
-
-RealNews Free Publish Core integrates six state‑of‑the‑art protocols:
-
-- **Hysteria2** — QUIC-based, high-performance, resistant to active probing  
-- **Reality** — TLS 1.3 camouflage with minimal fingerprint  
-- **VLESS** — Flexible, modern, widely supported  
-- **Trojan** — Pure TLS camouflage  
-- **XTLS** — Low-fingerprint, high-performance transport  
-- **XHTTP** — HTTP/3-based, indistinguishable from normal web traffic  
-
-These protocols are unified into a single, beginner‑friendly access layer designed for non‑technical users.
+Each module has its own README and internal structure.
 
 ---
 
-## 📰 Resilient News Aggregation
+## Core Concepts
 
-The system includes a censorship‑resistant news aggregation module:
+### Emergency Channel
+The Emergency Channel is the central processing system. All content—whether aggregated news or user-generated posts—flows through it. It ensures:
+- Censorship resistance
+- Metadata minimization
+- Secure storage
+- Adaptive transport selection
+- Multi-hop routing
 
-- RSS aggregation  
-- Mirror source integration  
-- Content deduplication  
-- Offline/low-bandwidth support  
-- Optional decentralized distribution  
+### Ingestion Modules
+Two ingestion paths feed content into the Emergency Channel:
+- News Aggregation Path
+- Pseudonymous BBS Path
 
-This ensures consistent access to independent journalism.
+Both paths normalize and sanitize content before handing it off to the core system.
 
----
+### Transport Layer
+The system supports multiple transport types:
+- Standard transports (HTTPS, CDN-backed)
+- Obfuscated transports
+- Covert transports (DNS tunneling, mimicry)
+- Offline and delay-tolerant transports
 
-## 💬 Lightweight Anonymous BBS
-
-A minimal, privacy-preserving discussion board:
-
-- Anonymous posting  
-- Basic moderation tools  
-- Lightweight storage  
-- Optional decentralized persistence  
-
-Designed for low-risk community interaction.
-
----
-
-## 🔐 Secure Uploader
-
-A safe channel for transmitting text, images, and media to:
-
-- External platforms  
-- Journalists or NGOs  
-- Decentralized storage networks  
-
-With metadata protection and optional encryption.
+The Emergency Channel selects transports dynamically based on censorship intensity and network conditions.
 
 ---
 
-## 🧱 Repository Structure
+## Documentation Overview
 
-<pre>
-realnews-free-publish-core/
-├── README.md
-├── LICENSE
-│
-├── docs/
-│   ├── overview.md
-│   ├── threat-model.md
-│   ├── funding-notes.md
-│   ├── modules.md
-│   └── emergency-publishing.md
-│
-├── architecture/
-│   ├── system-overview.md
-│   ├── protocol-integration.md
-│   ├── data-flow.md
-│   ├── security-design.md
-│   └── deployment-models.md
-│
-├── modules/
-│   ├── vpn-access-layer/
-│   ├── news-aggregation/
-│   ├── anonymous-bbs/
-│   └── emergency-publishing/
-│
-├── roadmap/
-│   ├── milestones.md
-│   ├── deliverables.md
-│   └── timeline.md
-│
-└── .github/
-</pre>
+The architecture/ directory contains the following documents:
+
+- system-overview.md  
+  High-level description of the system and its components.
+
+- data-flow.md  
+  End-to-end description of how data moves through the system.
+
+- protocol-integration.md  
+  Details on how transports integrate with the Emergency Channel.
+
+- security-design.md  
+  Threat model, trust boundaries, and security strategies.
+
+- deployment-models.md  
+  Deployment strategies for different censorship environments.
+
+These documents provide a complete understanding of the system’s design and operational model.
 
 ---
 
-## 📅 Roadmap
+## Development Philosophy
 
-- Emergency Publishing Channel MVP  
-- VPN Access Layer integration  
-- News Aggregation prototype  
-- Anonymous BBS  
-- Secure Uploader with decentralized storage  
-- NGO/Media deployment toolkit  
+The system is built on the following principles:
 
-See `roadmap/` for details.
+- Resilience under censorship  
+- Modularity and extensibility  
+- Strict data minimization  
+- Region-aware behavior  
+- Operational simplicity  
+- Secure-by-default design  
 
----
-
-## 📜 License
-
-This project is licensed under the **GNU AGPLv3**, ensuring that improvements to the software — especially when deployed as a network service — remain open and benefit the public.
+All modules are designed to operate independently while integrating seamlessly with the Emergency Channel.
 
 ---
 
-## 🤝 Collaboration
+## Intended Use
 
-We welcome collaboration with:
+This system is designed for:
+- High-risk regions with active censorship
+- Environments with unstable or intermittent connectivity
+- Scenarios requiring pseudonymous communication
+- Emergency information dissemination
 
-- Independent media organizations  
-- Civil society groups  
-- Researchers and technologists  
-- Digital rights advocates  
+It is not intended for commercial social networking or general-purpose messaging.
 
-Please open an issue or reach out through the organization page.
+---
+
+## Summary
+
+The Emergency Publishing System provides a unified, censorship-resistant communication platform built around the Emergency Channel. Supporting modules extend its capabilities, while the architecture documents define its behavior, security model, and deployment strategies. This repository contains everything needed to understand, develop, and deploy the system.
