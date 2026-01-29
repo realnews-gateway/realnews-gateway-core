@@ -1,104 +1,147 @@
-# Fallback System
+# Fallback Subsystem
 
-The Fallback subsystem provides automatic recovery and protocol switching when access paths are blocked, throttled, or degraded.  
-It ensures that users can maintain connectivity even under aggressive censorship, regional filtering, or active interference.
+The Fallback subsystem defines how clients recover from blocked, throttled, or degraded network conditions.  
+It provides region‑aware fallback chains, transport downgrade logic, and error normalization to ensure that the system remains reachable even under aggressive censorship.
 
-Fallback is a core resilience mechanism of the VPN Access Layer.
+Fallback is a core component of censorship resistance and must operate covertly, adaptively, and without exposing detectable patterns.
 
 ---
 
 ## Purpose
 
-The Fallback subsystem enables:
+Fallback enables:
 
-- Automatic switching between TLS, QUIC, HTTP, and CDN-backed entrypoints  
-- Region-specific fallback strategies based on known blocking patterns  
-- Real-time detection of failures, throttling, and DPI interference  
-- Graceful degradation from high-performance paths to stealth paths  
-- Persistent connectivity even when multiple protocols are blocked  
-- Integration with camouflage and session-init layers for seamless transitions  
+- Recovery from blocked transports (QUIC, TLS, HTTP/2)  
+- Region‑specific fallback strategies  
+- Seamless downgrade from QUIC → TLS → HTTP/2 → CDN  
+- Covert error handling and retry logic  
+- Avoidance of detectable retry patterns  
+- Integration with negotiation, camouflage, and bootstrap flows  
 
-It ensures that the system remains reachable in the most hostile environments.
-
----
-
-## Directory Structure
-
-This directory includes:
-
-- **region-profiles/**  
-  Region-specific fallback strategies and blocking patterns.  
-  Includes:
-  - `cn.md` — China  
-  - `ir.md` — Iran  
-  - `ru.md` — Russia  
-  - `default.md` — Global fallback profile
-
-- **protocol-fallback.md**  
-  Defines fallback chains between TLS, QUIC, HTTP, and CDN transports.
-
-- **failure-detection.md**  
-  Mechanisms for detecting blocking, throttling, and handshake interference.
-
-- **fallback.md**  
-  High-level specification of fallback behavior and integration.
+Fallback ensures that clients can always reach the server, even in hostile network environments.
 
 ---
 
-## Key Features
+## Design Principles
 
-- **Region-aware fallback**  
-  Uses country-specific blocking intelligence to choose the best fallback path.
+### **1. Region‑Aware Behavior**
+Different regions require different fallback strategies:
 
-- **Protocol chaining**  
-  Automatically transitions between:
-  - TLS → QUIC → HTTP → CDN  
-  - QUIC → TLS → HTTP → CDN  
-  - HTTP → TLS → QUIC → CDN  
-  depending on failure type.
+- QUIC-blocking regions  
+- TLS fingerprint filtering regions  
+- SNI-blocking regions  
+- CDN-only regions  
+- High-risk active probing regions  
 
-- **Real-time failure detection**  
-  Monitors:
-  - handshake failures  
-  - packet loss  
-  - latency spikes  
-  - DPI resets  
-  - throttling patterns  
+Fallback chains are defined per region.
 
-- **Seamless transitions**  
-  Maintains session continuity when possible, minimizing user disruption.
+---
 
-- **Adaptive behavior**  
-  Learns from repeated failures and adjusts fallback order dynamically.
+### **2. Progressive Downgrade**
+Fallback follows a structured downgrade path:
 
-- **Modular design**  
-  Region profiles, detection logic, and fallback chains are independently extensible.
+1. QUIC-first (if supported)  
+2. TLS (Chrome/Safari fingerprints)  
+3. HTTP/2 (browser-like)  
+4. CDN-backed domain-fronted mode  
+5. Final minimal HTTP-only mode  
+
+Each step must mimic real-world application behavior.
+
+---
+
+### **3. Covert Retry Logic**
+Retry behavior must avoid:
+
+- Fixed intervals  
+- Identifiable timing patterns  
+- Burst retries  
+- Static backoff sequences  
+
+Retry timing is randomized within realistic browser/app ranges.
+
+---
+
+### **4. Error Normalization**
+All fallback-triggering errors must resemble:
+
+- TLS alerts  
+- QUIC close frames  
+- HTTP error pages  
+- CDN gateway responses  
+
+This prevents censors from fingerprinting fallback behavior.
+
+---
+
+## Fallback Chain Structure
+
+A fallback chain consists of:
+
+- **Primary transport**  
+- **Secondary transport**  
+- **Tertiary transport**  
+- **CDN fallback**  
+- **Last-resort HTTP-only mode**  
+
+Each step includes:
+
+- Transport  
+- Camouflage profile  
+- Retry timing  
+- Error normalization rules  
+- Region-specific overrides  
+
+Fallback chains are defined in `chains.md`.
+
+---
+
+## Region Profiles
+
+Region profiles define:
+
+- Which transports are likely blocked  
+- Which TLS fingerprints are safe  
+- Whether QUIC is throttled  
+- Whether SNI filtering is active  
+- Whether CDN is required  
+
+Profiles are defined in `region-profiles.md`.
 
 ---
 
 ## Integration
 
-The Fallback subsystem connects to:
-
-- **entrypoints/**  
-  Selects alternative entrypoints when one is blocked.
-
-- **camouflage/**  
-  Adjusts camouflage strategies based on regional DPI behavior.
+Fallback integrates with:
 
 - **session-init/**  
-  Re-initiates negotiation when fallback requires a new transport.
+  Bootstrap failures trigger fallback transitions.
 
-- **emergency-publishing/router/**  
-  Ensures routing metadata is preserved across fallback transitions.
+- **camouflage/**  
+  Each fallback step selects a new camouflage profile.
 
-Fallback is the system’s “self-healing” mechanism.
+- **entrypoints/**  
+  Fallback determines which entrypoint to use next.
+
+- **client-profiles/**  
+  Platform-specific fallback behavior is applied.
+
+---
+
+## Security Considerations
+
+Fallback must:
+
+- Avoid static retry patterns  
+- Normalize all error responses  
+- Prevent fallback loops  
+- Avoid exposing backend infrastructure  
+- Adapt to regional censorship conditions  
+- Blend into legitimate browser/app behavior  
 
 ---
 
 ## Summary
 
-The Fallback subsystem ensures persistent connectivity under censorship.  
-By combining region-specific intelligence, protocol chaining, real-time failure detection, and seamless transitions, it provides robust resilience against blocking, throttling, and active interference.
-
-This subsystem is essential for maintaining reliable access in hostile network environments.
+The Fallback subsystem provides adaptive, covert, and region-aware recovery mechanisms that ensure continuous connectivity under censorship.  
+By combining progressive downgrade, error normalization, and region-specific strategies, it enables clients to remain reachable even in the most restrictive environments.
