@@ -1,119 +1,124 @@
 # Emergency Publishing System
 
-The Emergency Publishing System is a censorship-resistant communication architecture designed to deliver critical information under hostile network conditions. It provides a unified platform for news aggregation, pseudonymous user posts, and multi-protocol content distribution, all centered around a secure and resilient core subsystem: the Emergency Channel.
+The Emergency Publishing System is a censorship-resistant communication architecture designed for high-risk environments. It provides secure ingestion, processing, and distribution of critical information under hostile network conditions. The system integrates multiple modules into a unified, resilient core: the Emergency Channel.
 
-This repository contains the full system architecture, modules, and documentation required for development, deployment, and review.
+This repository contains the full architecture, roadmap, documentation, and module structure for development and review.
 
 ---
 
 ## Repository Structure
 
-The repository is organized into two major sections:
+### Core Directories
 
-### 1. Core System
-- emergency-channel/
-- architecture/
+- architecture/  
+  High-level system design, data flow, security model, and deployment strategies.
 
-The Emergency Channel is the backbone of the system. It handles:
-- Sanitization
-- Storage
-- Routing
-- Multi-protocol distribution
-- Region-aware delivery
-- Fallback transports
+- emergency-channel/  
+  Core subsystem responsible for sanitization, routing, storage, and multi-transport distribution.
 
-The architecture/ directory contains high-level design documents describing system behavior, data flow, security, and deployment models.
+- modules/  
+  Independent modules that integrate with the Emergency Channel:
+    - vpn-access-layer  
+    - news-aggregation  
+    - anonymous-bbs  
 
-### 2. Supporting Modules
-- modules/
+- docs/  
+  Additional documentation, conceptual notes, and supporting materials.
 
-Supporting modules operate independently but integrate with the Emergency Channel. They include:
-- vpn-access-layer: covert access and fallback routing
-- news-aggregation: ingestion and normalization of external sources
-- anonymous-bbs: pseudonymous posting with metadata minimization
+- roadmap/  
+  Structured development plan:
+    - milestones.md  
+    - deliverables.md  
+    - timeline.md  
+    - README.md (overview)
 
-Each module has its own README and internal structure.
+- .github/  
+  GitHub workflows, issue templates, and repository automation.
 
 ---
 
 ## Core Concepts
 
 ### Emergency Channel
-The Emergency Channel is the central processing system. All content—whether aggregated news or user-generated posts—flows through it. It ensures:
-- Censorship resistance
-- Metadata minimization
-- Secure storage
-- Adaptive transport selection
-- Multi-hop routing
+The central processing system responsible for:
+- Content sanitization  
+- Metadata minimization  
+- Secure storage  
+- Region-aware routing  
+- Multi-transport delivery  
+- Fallback and covert communication paths  
+
+All content—news ingestion or pseudonymous posts—flows through this subsystem.
 
 ### Ingestion Modules
-Two ingestion paths feed content into the Emergency Channel:
-- News Aggregation Path
-- Pseudonymous BBS Path
+Two primary ingestion paths feed the Emergency Channel:
+- News Aggregation Path  
+- Anonymous BBS Path  
 
-Both paths normalize and sanitize content before handing it off to the core system.
+Both normalize, sanitize, and prepare content for secure distribution.
 
 ### Transport Layer
-The system supports multiple transport types:
-- Standard transports (HTTPS, CDN-backed)
-- Obfuscated transports
-- Covert transports (DNS tunneling, mimicry)
-- Offline and delay-tolerant transports
+Supports multiple transport types:
+- Standard transports  
+- Obfuscated transports  
+- Covert transports  
+- Offline and delay-tolerant modes  
 
-The Emergency Channel selects transports dynamically based on censorship intensity and network conditions.
+Transport selection adapts to censorship intensity and network conditions.
 
 ---
 
 ## Documentation Overview
 
-The architecture/ directory contains the following documents:
+Key documents are located in the architecture/ directory:
 
 - system-overview.md  
-  High-level description of the system and its components.
-
 - data-flow.md  
-  End-to-end description of how data moves through the system.
-
 - protocol-integration.md  
-  Details on how transports integrate with the Emergency Channel.
-
 - security-design.md  
-  Threat model, trust boundaries, and security strategies.
-
 - deployment-models.md  
-  Deployment strategies for different censorship environments.
 
-These documents provide a complete understanding of the system’s design and operational model.
+These define the system’s behavior, threat model, and operational strategies.
+
+Additional materials are in docs/.
 
 ---
 
-## Development Philosophy
+## Roadmap
 
-The system is built on the following principles:
+The roadmap/ directory provides a structured development plan:
 
-- Resilience under censorship  
-- Modularity and extensibility  
-- Strict data minimization  
+- milestones.md  
+- deliverables.md  
+- timeline.md  
+
+This outlines system evolution, review phases, and deployment readiness.
+
+---
+
+## Development Guidelines
+
+Contributions follow the principles defined in:
+
+- CONTRIBUTING.md  
+- SECURITY.md  
+- CODEOFCONDUCT.md  
+
+The system emphasizes:
+- Security-first design  
+- Metadata minimization  
+- Modular architecture  
 - Region-aware behavior  
-- Operational simplicity  
-- Secure-by-default design  
-
-All modules are designed to operate independently while integrating seamlessly with the Emergency Channel.
+- Clear and stable documentation  
 
 ---
 
-## Intended Use
+## License
 
-This system is designed for:
-- High-risk regions with active censorship
-- Environments with unstable or intermittent connectivity
-- Scenarios requiring pseudonymous communication
-- Emergency information dissemination
-
-It is not intended for commercial social networking or general-purpose messaging.
+This project is licensed under the terms described in LICENSE.
 
 ---
 
 ## Summary
 
-The Emergency Publishing System provides a unified, censorship-resistant communication platform built around the Emergency Channel. Supporting modules extend its capabilities, while the architecture documents define its behavior, security model, and deployment strategies. This repository contains everything needed to understand, develop, and deploy the system.
+The Emergency Publishing System provides a resilient, censorship-resistant communication platform built around the Emergency Channel. Its modular architecture, structured roadmap, and comprehensive documentation support long-term development, review, and deployment in high-risk environments.
