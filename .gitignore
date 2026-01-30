@@ -1,0 +1,36 @@
+# Go build artifacts
+bin/
+build/
+dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go test cache
+*.test
+*.out
+
+# Go modules
+vendor/
+go.work
+go.work.sum
+
+# Temporary files
+*.tmp
+*.log
+*.cache/
+.tmp/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Editor settings
+.vscode/
+.idea/
+
+# Documentation tools
+docs/.cache/
+docs/.temp/
